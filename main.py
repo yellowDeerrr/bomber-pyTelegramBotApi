@@ -15,6 +15,7 @@ def send_welcome(message):
     item1 = types.KeyboardButton('sms бомбер')
     item2 = types.KeyboardButton('inst спамер')
     markup.add(item1, item2)
+    bot.send_message(message.chat.id, "Choose", reply_markup=markup)
 
 
 def setNumber(message):
