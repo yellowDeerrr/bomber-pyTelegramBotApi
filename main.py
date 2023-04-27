@@ -1,16 +1,20 @@
 import time
 
 import chromeDriver.main
+import chromeDriver.inst_spamer
 from MySQLDB.main import addLogsRequests, checkUserInDB, checkInterval, addUserInDBRequests, getDt
 import telebot
+from telebot import types
 
 bot = telebot.TeleBot('5894871653:AAGz5ybhLreUY7YdaTXWdkkRFjGv40TwOhA')
 
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    user_input_number = bot.send_message(message.chat.id, 'Enter number 380: ')
-    bot.register_next_step_handler(user_input_number, setNumber)
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    item1 = types.KeyboardButton('sms бомбер')
+    item2 = types.KeyboardButton('inst спамер')
+    markup.add(item1, item2)
 
 
 def setNumber(message):
@@ -29,6 +33,10 @@ def setNumber(message):
         user_input_howMuch = bot.send_message(message.chat.id, 'How much: ')
         bot.register_next_step_handler(user_input_howMuch, setHowMuch)
 
+
+def setLinkInstagram(message):
+    link = str(message.text)
+    chromeDriver.inst_spamer.startInstagram(link)
 
 def setHowMuch(message):
     global howMuch
@@ -84,6 +92,13 @@ def check(message):
         bot.send_message(message.chat.id, "👍🏿", parse_mode="HTML")
         time.sleep(1)
         bot.send_message(message.chat.id, "<b>Неа, а всьо</b>", parse_mode="HTML")
+
+    elif message.text == 'sms бомбер':
+        user_input_number = bot.send_message(message.chat.id, 'Enter number 380: ')
+        bot.register_next_step_handler(user_input_number, setNumber)
+    elif message.text == 'inst спамер':
+        jopa = bot.send_message(message.chat.id, 'enter silka instagrama:)')
+        bot.register_next_step_handler(jopa, setNumber)
 
 
 bot.infinity_polling()

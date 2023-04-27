@@ -1,0 +1,2 @@
+def startInstagram(link):
+    pass
