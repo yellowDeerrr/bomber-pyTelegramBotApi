@@ -1,7 +1,6 @@
 import time
 
 import chromeDriver.main
-import chromeDriver.inst_spamer
 from MySQLDB.main import addLogsRequests, checkUserInDB, checkInterval, addUserInDBRequests, getDt
 import telebot
 from telebot import types
@@ -27,7 +26,7 @@ def setNumber(message):
         bot.send_message(message.chat.id, "👮🏿‍<b>Вже їду</b>", parse_mode="HTML")
         send_welcome(message)
         time.sleep(1)
-    elif message.text == "688424645":
+    elif message.text == "972536871":
         bot.send_message(message.chat.id, "👍🏿", parse_mode="HTML")
         time.sleep(1)
         bot.send_message(message.chat.id, "<b>УДАЧІ В ЖИЗНІ </b>", parse_mode="HTML")
