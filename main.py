@@ -12,10 +12,10 @@ bot = telebot.TeleBot('5894871653:AAGz5ybhLreUY7YdaTXWdkkRFjGv40TwOhA')
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1 = types.KeyboardButton('sms бомбер')
-    item2 = types.KeyboardButton('inst спамер')
+    item1 = types.KeyboardButton('SMS Bomber')
+    item2 = types.KeyboardButton('Instagram Spammer')
     markup.add(item1, item2)
-    bot.send_message(message.chat.id, "Choose", reply_markup=markup)
+    bot.send_message(message.chat.id, "Виберіть", reply_markup=markup)
 
 
 def setNumber(message):
@@ -38,6 +38,7 @@ def setNumber(message):
 def setLinkInstagram(message):
     link = str(message.text)
     chromeDriver.inst_spamer.startInstagram(link)
+
 
 def setHowMuch(message):
     global howMuch
@@ -94,11 +95,11 @@ def check(message):
         time.sleep(1)
         bot.send_message(message.chat.id, "<b>Неа, а всьо</b>", parse_mode="HTML")
 
-    elif message.text == 'sms бомбер':
+    elif message.text == 'SMS Bomber':
         user_input_number = bot.send_message(message.chat.id, 'Enter number 380: ')
         bot.register_next_step_handler(user_input_number, setNumber)
-    elif message.text == 'inst спамер':
-        jopa = bot.send_message(message.chat.id, 'enter silka instagrama:)')
+    elif message.text == 'Instagram Spammer':
+        jopa = bot.send_message(message.chat.id, 'Enter number 380: ')
         bot.register_next_step_handler(jopa, setNumber)
 
 
