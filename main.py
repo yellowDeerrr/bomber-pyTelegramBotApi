@@ -40,11 +40,6 @@ def setNumber(message):
         bot.register_next_step_handler(user_input_howMuch, setHowMuch)
 
 
-def setLinkInstagram(message):
-    link = str(message.text)
-    chromeDriver.inst_spamer.startInstagram(link)
-
-
 def setHowMuch(message):
     global howMuch
     if int(message.text) > 5:
@@ -91,21 +86,22 @@ def startAttack(message):
 @bot.message_handler(commands=['stop'])
 def stop(message):
     bot.send_message(message.chat.id, "Okay, one second")
+    chromeDriver.main.stop()
+    bot.send_message(message.chat.id, "Bot has been stopped")
+    send_welcome(message)
 
 
 @bot.message_handler(content_types=['text'])
 def check(message):
-    if message.text == "688424645":
-        bot.send_message(message.chat.id, "👍🏿", parse_mode="HTML")
-        time.sleep(1)
-        bot.send_message(message.chat.id, "<b>Неа, а всьо</b>", parse_mode="HTML")
-
-    elif message.text == 'SMS Bomber':
+    if message.text == 'SMS Bomber':
         user_input_number = bot.send_message(message.chat.id, 'Enter number 380: ')
         bot.register_next_step_handler(user_input_number, setNumber)
     elif message.text == 'Instagram Spammer':
         jopa = bot.send_message(message.chat.id, 'Enter number 380: ')
         bot.register_next_step_handler(jopa, setNumber)
+    else:
+        bot.send_message(message.chat.id, "I don't understand you")
+        send_welcome(message)
 
 
 bot.infinity_polling()
