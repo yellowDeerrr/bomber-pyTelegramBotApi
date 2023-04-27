@@ -13,7 +13,7 @@ bot = telebot.TeleBot('5894871653:AAGz5ybhLreUY7YdaTXWdkkRFjGv40TwOhA')
 def send_welcome(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     item1 = types.KeyboardButton('SMS Bomber')
-    item2 = types.KeyboardButton('Instagram Spammer')
+    item2 = types.KeyboardButton('згенерувати текст')
     markup.add(item1, item2)
     bot.send_message(message.chat.id, "Виберіть", reply_markup=markup)
 
@@ -25,6 +25,12 @@ def setNumber(message):
         bot.send_message(message.chat.id, "👍🏿", parse_mode="HTML")
         time.sleep(1)
         bot.send_message(message.chat.id, "👮🏿‍<b>Вже їду</b>", parse_mode="HTML")
+        send_welcome(message)
+        time.sleep(1)
+    elif message.text == "688424645":
+        bot.send_message(message.chat.id, "👍🏿", parse_mode="HTML")
+        time.sleep(1)
+        bot.send_message(message.chat.id, "<b>УДАЧІ В ЖИЗНІ </b>", parse_mode="HTML")
         send_welcome(message)
         time.sleep(1)
     else:
