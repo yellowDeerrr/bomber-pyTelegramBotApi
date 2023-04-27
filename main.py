@@ -1,7 +1,7 @@
 import time
 
 import chromeDriver.main
-from MySQLDB.main import addLogsRequests, checkUserInDB, checkInterval, addUserInDBRequests, getDt, createTable
+from MySQLDB.main import addLogsRequests, checkUserInDB, checkInterval, addUserInDBRequests, getDt
 import telebot
 
 bot = telebot.TeleBot('5894871653:AAGz5ybhLreUY7YdaTXWdkkRFjGv40TwOhA')
@@ -9,7 +9,6 @@ bot = telebot.TeleBot('5894871653:AAGz5ybhLreUY7YdaTXWdkkRFjGv40TwOhA')
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    createTable()
     user_input_number = bot.send_message(message.chat.id, 'Enter number 380: ')
     bot.register_next_step_handler(user_input_number, setNumber)
 
@@ -17,10 +16,10 @@ def send_welcome(message):
 def setNumber(message):
     global number
 
-    if message.text == "88424645":
+    if message.text == "688424645":
         bot.send_message(message.chat.id, "👍🏿", parse_mode="HTML")
         time.sleep(1)
-        bot.send_message(message.chat.id, "<b>Неа, а всьо</b>", parse_mode="HTML")
+        bot.send_message(message.chat.id, "👮🏿‍<b>Вже їду</b>", parse_mode="HTML")
         send_welcome(message)
         time.sleep(1)
     else:
@@ -41,6 +40,14 @@ def setHowMuch(message):
         bot.send_message(message.chat.id, "/startAttack")
 
 
+@bot.message_handler(commands=['stop'])
+def stop(message):
+    bot.send_message(message.chat.id, "Okay, one second")
+    chromeDriver.main.stop()
+    bot.send_message(message.chat.id, "Bot has been stopped")
+    send_welcome(message)
+
+
 @bot.message_handler(commands=['startAttack'])
 def startAttack(message):
     id = message.from_user.id
@@ -49,6 +56,8 @@ def startAttack(message):
     if checkUserInDB(id, first_name):
         if checkInterval(id):
             bot.send_message(message.chat.id, "Wait")
+            bot.send_message(message.chat.id, "If you want to stop")
+            bot.send_message(message.chat.id, "/stop")
             chromeDriver.main.main(number, howMuch)
             bot.send_message(message.chat.id, "End")
             send_welcome(message)
@@ -62,6 +71,11 @@ def startAttack(message):
         chromeDriver.main.main(number, howMuch)
         bot.send_message(message.chat.id, "End")
         send_welcome(message)
+
+
+@bot.message_handler(commands=['stop'])
+def stop(message):
+    bot.send_message(message.chat.id, "Okay, one second")
 
 
 @bot.message_handler(content_types=['text'])

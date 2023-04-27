@@ -110,24 +110,6 @@ def getDt(telegramId):
     except Exception as e:
         print(e)
 
-def createTable():
-    try:
-        conn = pymysql.connect(
-            host="containers-us-west-116.railway.app",
-            port=5475,
-            user="root",
-            password="0yk6OVLQy05XiUK9tGKa",
-            database="railway",
-            cursorclass=pymysql.cursors.DictCursor)
-        try:
-            with conn.cursor() as cursor:
-                cursor.execute(f"create table traffic (id int AUTO_INCREMENT, telegramId varchar(20), userName varchar(50), PRIMARY KEY (id))")
-                conn.commit()
-        finally:
-            conn.close()
-    except Exception as e:
-        print(e)
-
 
 def addUserInDBRequests(userId, userName):
     try:
