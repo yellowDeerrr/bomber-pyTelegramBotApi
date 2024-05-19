@@ -19,25 +19,12 @@ def send_welcome(message):
 
 def setNumber(message):
     global number
+    
+    number = str(message.text)
+    print(number)
 
-    if message.text == "688424645":
-        bot.send_message(message.chat.id, "👍🏿", parse_mode="HTML")
-        time.sleep(1)
-        bot.send_message(message.chat.id, "👮🏿‍<b>Вже їду</b>", parse_mode="HTML")
-        send_welcome(message)
-        time.sleep(1)
-    elif message.text == "972536871":
-        bot.send_message(message.chat.id, "👍🏿", parse_mode="HTML")
-        time.sleep(1)
-        bot.send_message(message.chat.id, "<b>УДАЧІ В ЖИЗНІ </b>", parse_mode="HTML")
-        send_welcome(message)
-        time.sleep(1)
-    else:
-        number = str(message.text)
-        print(number)
-
-        user_input_howMuch = bot.send_message(message.chat.id, 'How much: ')
-        bot.register_next_step_handler(user_input_howMuch, setHowMuch)
+    user_input_howMuch = bot.send_message(message.chat.id, 'How much: ')
+    bot.register_next_step_handler(user_input_howMuch, setHowMuch)
 
 
 def setHowMuch(message):
